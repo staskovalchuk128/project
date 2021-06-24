@@ -40,6 +40,7 @@ var LoginComponent = /** @class */ (function () {
             .subscribe(function (data) {
             _this.router.navigateByUrl("/account");
         }, function (error) {
+            alert(error);
             _this.loading = false;
             //  this.alertService.error(error);
             //  this.loading = false;

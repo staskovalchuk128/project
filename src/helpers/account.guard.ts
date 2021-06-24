@@ -6,17 +6,17 @@ import { map } from 'rxjs/operators';
 
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AccountGuard implements CanActivate {
   constructor(
     private router: Router,
     private userService: UserService
   ) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean{
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
 
     if(this.userService.loadedUserId === true){
-      if(this.userService.getUserId() > 0) {
-        this.router.navigate(['/account']);
+      if(this.userService.getUserId() == 0) {
+        this.router.navigate(['/login']);
         return false;
       }
       return true;
@@ -24,11 +24,9 @@ export class AuthGuard implements CanActivate {
 
     return this.userService.loadUserId().pipe(map(r => {
       let userId = this.userService.getUserId();
-      if (userId > 0) {
-        this.router.navigate(['/account']);
-        return false;
-      }
-      return true;
+      if (userId > 0) return true;
+      this.router.navigate(['/login']);
+      return false;
     }));
 
   }

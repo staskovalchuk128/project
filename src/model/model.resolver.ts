@@ -16,9 +16,6 @@ export class ModelResolver {
 
         if(this.userService.loadedUserData === false){
           this.messages.reportMessage(new Message("Loading data..."));
-          
-
-
           return this.userService.loadUserData();
         }
 

@@ -21,32 +21,29 @@ var UserService = /** @class */ (function () {
         this.router = router;
         this.userId = 0;
         this.loadedUserData = false;
+        this.loadedUserId = false;
     }
     UserService.prototype.setUserId = function (id) {
         this.userId = id;
+        this.loadedUserId = true;
     };
     UserService.prototype.getUserId = function () {
         return this.userId;
     };
     UserService.prototype.loadUserId = function () {
         var _this = this;
-        var storageUser = localStorage.getItem('USER');
-        var USER = JSON.parse(storageUser);
-        if (USER)
-            this.userId = USER.hasOwnProperty('id') ? USER.id : 0;
-        if (this.userId == 0) {
-            return this.ajax.send({
-                dir: 'user',
-                action: 'get_user_session'
-            }).pipe(operators_1.map(function (response) {
-                if (response.success == true) {
-                    _this.userId = response.data;
-                    // localStorage.setItem('USER', JSON.stringify({
-                    //   id: this.userId
-                    // }));
-                }
-            }));
-        }
+        return this.ajax.send({
+            dir: 'user',
+            action: 'get_user_session'
+        }).pipe(operators_1.map(function (response) {
+            if (response.success == true) {
+                _this.setUserId(response.data);
+            }
+            else {
+                //user not signed in
+                _this.router.navigate(['/login']);
+            }
+        }));
     };
     UserService.prototype.saveUserData = function (newUserData) {
         var _this = this;
@@ -66,38 +63,44 @@ var UserService = /** @class */ (function () {
     };
     UserService.prototype.setUserData = function (data) {
         this.userData = new user_model_1.User(data.id, data.first_name, data.last_name, data.middle_name, data.maiden_name, data.email, data.birthday, data.phone, data.job, data.gender, data.create_date);
+        this.loadedUserData = true;
     };
     UserService.prototype.loadUserData = function () {
         var _this = this;
-        var user_id = this.getUserId();
-        if (user_id == 0) {
-            return this.loadUserId().pipe(operators_1.map(function (r) {
-                return _this.getUserDataFromServer();
-            }));
-        }
-        return this.getUserDataFromServer();
+        if (this.loadedUserId === true)
+            return this.getUserDataFromServer();
+        return this.loadUserId().pipe(operators_1.map(function (r) {
+            return _this.getUserDataFromServer();
+        }));
     };
     UserService.prototype.getUserDataFromServer = function () {
         var _this = this;
-        var user_id = this.userId;
-        return this.ajax.send({
-            dir: 'user',
-            action: 'get_user_data',
-            id: user_id
-        }).pipe(operators_1.map(function (response) {
-            if (response.success == true) {
-                _this.setUserData(response.data);
-            }
-            else {
-                // Error User Not Found
-                alert(response.data);
-            }
-            _this.loadedUserData = true;
-            return _this.userData;
-        }));
+        var user_id = this.getUserId();
+        if (user_id > 0) {
+            return this.ajax.send({
+                dir: 'user',
+                action: 'get_user_data',
+                id: user_id
+            }).pipe(operators_1.map(function (response) {
+                if (response.success == true) {
+                    _this.setUserData(response.data);
+                }
+                else {
+                    // Error User Not Found
+                    alert(response.data);
+                }
+                return _this.userData;
+            }));
+        }
     };
     UserService.prototype.getUserData = function () {
         return this.userData;
+    };
+    UserService.prototype.clear = function () {
+        this.userId = 0;
+        this.loadedUserData = false;
+        this.loadedUserId = false;
+        this.userData = new user_model_1.User();
     };
     UserService = __decorate([
         core_1.Injectable({

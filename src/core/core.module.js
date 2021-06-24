@@ -20,6 +20,7 @@ var header_component_1 = require("./header.component");
 var account_component_1 = require("./account.component");
 var userMenu_component_1 = require("./account/userMenu.component");
 var profile_component_1 = require("./account/profile.component");
+var logout_component_1 = require("./account/logout.component");
 var profileEdit_component_1 = require("./account/profileEdit.component");
 var userMain_component_1 = require("./account/userMain.component");
 var CoreModule = /** @class */ (function () {
@@ -29,7 +30,7 @@ var CoreModule = /** @class */ (function () {
         core_1.NgModule({
             imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, forms_1.ReactiveFormsModule, model_module_1.ModelModule, router_1.RouterModule, message_module_1.MessageModule],
             declarations: [login_component_1.LoginComponent, register_component_1.RegisterComponent, mainPage_component_1.MainPageComponent, header_component_1.HeaderComponent, account_component_1.AccountComponent,
-                userMenu_component_1.UserMenuCompoment, profile_component_1.ProfileComponent, profileEdit_component_1.ProfileEditComponent, userMain_component_1.UserMainComponent],
+                userMenu_component_1.UserMenuCompoment, logout_component_1.LogoutComponent, profile_component_1.ProfileComponent, profileEdit_component_1.ProfileEditComponent, userMain_component_1.UserMainComponent],
             exports: [model_module_1.ModelModule, header_component_1.HeaderComponent],
         })
     ], CoreModule);

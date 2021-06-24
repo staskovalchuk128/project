@@ -23,9 +23,6 @@ export class AuthenticationService {
     }).pipe(map(response => {
       if(response.success == true){
         if(response.data.hasOwnProperty('id') && response.data.id > 0){
-          localStorage.setItem('USER', JSON.stringify({
-            id: response.data.id
-          }));
           this.userService.setUserId(response.data.id);
           this.userService.setUserData(response.data);
         }
@@ -43,19 +40,26 @@ export class AuthenticationService {
       email: email,
       password: password
     }).pipe(map(response => {
-      if(response.data.hasOwnProperty('id') && response.data.id > 0){
-        localStorage.setItem('USER', JSON.stringify({
-          id: response.data.id
-        }));
-        this.userService.setUserId(response.data.id);
-        this.userService.setUserData(response.data);
+      if(response.success == true){
+        if(response.data.hasOwnProperty('id') && response.data.id > 0){
+          this.userService.setUserId(response.data.id);
+          this.userService.setUserData(response.data);
+        }
+        return true;
+      } else{
+        throw new Error(response.data);
       }
-      return response.data;
     }));
   }
 
-  logout() {
-    // remove user from local storage and set current user to null
-    localStorage.removeItem('USER');
+  logout(): Observable<boolean>{
+    return this.ajax.send({
+      dir: 'auth',
+      action: 'logout'
+    }).pipe(map(response => {
+      this.userService.clear();
+      return true;
+    }));
+
   }
 }

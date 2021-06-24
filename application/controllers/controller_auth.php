@@ -5,6 +5,11 @@ class Controller_Auth extends Controller{
 		$this->view->generate('auth_view.php', 'template_view.php');
 	}
 
+	public function logout(){
+		$session = new Sessions();
+		return $session->logout();
+	}
+
 	public function register($data){
 		$session = new Sessions();
 
@@ -35,7 +40,7 @@ class Controller_Auth extends Controller{
 		$session = new Sessions();
 		// if user logged in
 		if($session->is_logged_user()) return array('error' => true,'desc' => 'You already logged in');
-		
+
 		$email = isset($data['email']) ? $data['email'] : '';
 		$password = isset($data['password']) ? $data['password'] : '';
 

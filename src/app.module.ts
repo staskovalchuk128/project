@@ -9,6 +9,7 @@ import { MessageComponent } from "./messages/message.component";
 import { AppComponent } from "./app.component";
 import { ModelResolver } from "./model/model.resolver";
 import { AuthGuard } from "./helpers/auth.guard";
+import { AccountGuard } from "./helpers/account.guard";
 
 
 @NgModule({
@@ -17,7 +18,7 @@ import { AuthGuard } from "./helpers/auth.guard";
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, AccountGuard],
   declarations: [AppComponent],
   bootstrap: [AppComponent]
 })

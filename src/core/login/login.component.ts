@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit{
           this.router.navigateByUrl("/account");
         },
         error => {
+          alert(error);
           this.loading = false;
           //  this.alertService.error(error);
           //  this.loading = false;

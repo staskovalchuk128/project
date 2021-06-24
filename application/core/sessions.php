@@ -16,6 +16,14 @@ class Sessions{
   }
 
 
+  public function logout(){
+    session_start();
+    unset($_SESSION['user_data']);
+    session_write_close();
+    return true;
+  }
+
+
   public function start_user_session($user_id){
     $user_model = new User_Model($user_id);
     $this->user_data = $user_model->get_user_data();

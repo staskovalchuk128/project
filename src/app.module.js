@@ -15,6 +15,7 @@ var app_routing_1 = require("./app.routing");
 var message_module_1 = require("./messages/message.module");
 var app_component_1 = require("./app.component");
 var auth_guard_1 = require("./helpers/auth.guard");
+var account_guard_1 = require("./helpers/account.guard");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -25,7 +26,7 @@ var AppModule = /** @class */ (function () {
                 forms_1.FormsModule,
                 forms_1.ReactiveFormsModule
             ],
-            providers: [auth_guard_1.AuthGuard],
+            providers: [auth_guard_1.AuthGuard, account_guard_1.AccountGuard],
             declarations: [app_component_1.AppComponent],
             bootstrap: [app_component_1.AppComponent]
         })

@@ -13,13 +13,14 @@ import { HeaderComponent } from "./header.component";
 import { AccountComponent } from "./account.component";
 import { UserMenuCompoment } from "./account/userMenu.component";
 import { ProfileComponent } from "./account/profile.component";
+import { LogoutComponent } from "./account/logout.component";
 import { ProfileEditComponent } from "./account/profileEdit.component";
 import { UserMainComponent } from "./account/userMain.component";
 
 @NgModule({
   imports: [BrowserModule, FormsModule, ReactiveFormsModule, ModelModule, RouterModule, MessageModule],
   declarations: [LoginComponent, RegisterComponent, MainPageComponent, HeaderComponent, AccountComponent,
-    UserMenuCompoment, ProfileComponent, ProfileEditComponent, UserMainComponent],
+    UserMenuCompoment, LogoutComponent, ProfileComponent, ProfileEditComponent, UserMainComponent],
   exports: [ModelModule, HeaderComponent],
 })
 export class CoreModule { }

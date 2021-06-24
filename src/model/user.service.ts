@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { User } from "./user.model";
 import { UserRepository } from "./user.repository";
@@ -15,6 +16,7 @@ import { map } from 'rxjs/operators';
 export class UserService {
   userId: number = 0;
   loadedUserData: boolean = false;
+  loadedUserId: boolean = false;
   userData: User;
 
   constructor(private ajax: AjaxRequests, private router: Router) {
@@ -22,6 +24,7 @@ export class UserService {
 
   setUserId(id){
     this.userId = id;
+    this.loadedUserId = true;
   }
 
   getUserId(){
@@ -29,25 +32,17 @@ export class UserService {
   }
 
   loadUserId(){
-    var storageUser = localStorage.getItem('USER');
-    let USER = JSON.parse(storageUser);
-    if(USER) this.userId = USER.hasOwnProperty('id') ? USER.id : 0;
-
-    if(this.userId == 0){
-
-      return this.ajax.send({
-        dir: 'user',
-        action: 'get_user_session'
-      }).pipe(map(response => {
-        if(response.success == true){
-          this.userId = response.data;
-          // localStorage.setItem('USER', JSON.stringify({
-          //   id: this.userId
-          // }));
-        }
-      }));
-    }
-
+    return this.ajax.send({
+      dir: 'user',
+      action: 'get_user_session'
+    }).pipe(map(response => {
+      if(response.success == true){
+        this.setUserId(response.data);
+      } else {
+        //user not signed in
+        this.router.navigate(['/login']);
+      }
+    }));
   }
 
 
@@ -72,40 +67,48 @@ export class UserService {
       data.id, data.first_name, data.last_name, data.middle_name, data.maiden_name,
       data.email, data.birthday, data.phone, data.job, data.gender, data.create_date
     );
+    this.loadedUserData = true;
   }
 
   loadUserData(){
-    let user_id = this.getUserId();
 
-    if(user_id == 0) {
-      return this.loadUserId().pipe(map(r => {
-        return this.getUserDataFromServer();
-      }));
-    }
+    if(this.loadedUserId === true) return this.getUserDataFromServer();
 
-    return this.getUserDataFromServer();
+    return this.loadUserId().pipe(map(r => {
+      return this.getUserDataFromServer();
+    }));
   }
 
   getUserDataFromServer(){
-    let user_id = this.userId;
-    return this.ajax.send({
-      dir: 'user',
-      action: 'get_user_data',
-      id: user_id
-    }).pipe(map(response => {
-      if(response.success == true){
-        this.setUserData(response.data);
-      } else {
-        // Error User Not Found
-        alert(response.data);
-      }
-      this.loadedUserData = true;
-      return this.userData;
-    }));
+    let user_id = this.getUserId();
+
+    if(user_id > 0){
+      return this.ajax.send({
+        dir: 'user',
+        action: 'get_user_data',
+        id: user_id
+      }).pipe(map(response => {
+        if(response.success == true){
+          this.setUserData(response.data);
+        } else {
+          // Error User Not Found
+          alert(response.data);
+        }
+        return this.userData;
+      }));
+    }
+
   }
 
   getUserData(){
     return this.userData;
+  }
+
+  clear(){
+    this.userId = 0;
+    this.loadedUserData = false;
+    this.loadedUserId = false;
+    this.userData = new User();
   }
 
 }

@@ -30,9 +30,6 @@ var AuthenticationService = /** @class */ (function () {
         }).pipe(operators_1.map(function (response) {
             if (response.success == true) {
                 if (response.data.hasOwnProperty('id') && response.data.id > 0) {
-                    localStorage.setItem('USER', JSON.stringify({
-                        id: response.data.id
-                    }));
                     _this.userService.setUserId(response.data.id);
                     _this.userService.setUserData(response.data);
                 }
@@ -51,19 +48,27 @@ var AuthenticationService = /** @class */ (function () {
             email: email,
             password: password
         }).pipe(operators_1.map(function (response) {
-            if (response.data.hasOwnProperty('id') && response.data.id > 0) {
-                localStorage.setItem('USER', JSON.stringify({
-                    id: response.data.id
-                }));
-                _this.userService.setUserId(response.data.id);
-                _this.userService.setUserData(response.data);
+            if (response.success == true) {
+                if (response.data.hasOwnProperty('id') && response.data.id > 0) {
+                    _this.userService.setUserId(response.data.id);
+                    _this.userService.setUserData(response.data);
+                }
+                return true;
             }
-            return response.data;
+            else {
+                throw new Error(response.data);
+            }
         }));
     };
     AuthenticationService.prototype.logout = function () {
-        // remove user from local storage and set current user to null
-        localStorage.removeItem('USER');
+        var _this = this;
+        return this.ajax.send({
+            dir: 'auth',
+            action: 'logout'
+        }).pipe(operators_1.map(function (response) {
+            _this.userService.clear();
+            return true;
+        }));
     };
     AuthenticationService = __decorate([
         core_1.Injectable({ providedIn: 'root' }),
