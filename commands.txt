@@ -1,0 +1,14 @@
+cd C:\xampp\htdocs\project
+
+ng serve --port 3000 --open
+
+npm run json
+
+
+
+cd "C:\Program Files\Docker\Docker"
+./DockerCli.exe -SwitchDaemon
+
+
+npm cache clear --force
+npm cache verify

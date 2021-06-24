@@ -1,0 +1,45 @@
+<div class="">
+  <div class="text-right">
+    <button routerLink="/account/profile/edit" type="button" class="btn btn-success btn-xs" name="button">Edit profile</button>
+  </div>
+  <table class="table">
+    <tbody>
+      <tr>
+        <td>Name</td>
+        <td class="text-right">{{user.firstName}} {{user.lastName}} {{test}}</td>
+      </tr>
+      <tr *ngIf="user.gender == 'f'">
+        <td>Maiden Name</td>
+        <td class="text-right">{{user.maidenName}}</td>
+      </tr>
+      <tr>
+        <td>Birthday</td>
+        <td class="text-right">{{user.birthday}}</td>
+      </tr>
+      <tr>
+        <td>Gender</td>
+        <td class="text-right" [ngSwitch]="user.gender">
+          <span *ngSwitchCase="'m'">Male</span>
+          <span *ngSwitchCase="'f'">Female</span>
+          <span *ngSwitchCase="'o'">Other</span>
+          <span *ngSwitchDefault="">Not selected</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td class="text-right">{{user.email}}</td>
+      </tr>
+      <tr>
+        <td>Phone</td>
+        <td class="text-right">{{user.phone}}</td>
+      </tr>
+      <tr>
+        <td>Job</td>
+        <td class="text-right">{{user.job || 'Blank'}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="">
+
+</div>
