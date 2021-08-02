@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AjaxRequests = void 0;
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/common/http");
-// import "rxjs/add/operator/map";
 var AjaxRequests = /** @class */ (function () {
     function AjaxRequests(http) {
         this.http = http;

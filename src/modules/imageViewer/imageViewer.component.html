@@ -1,0 +1,71 @@
+
+<style media="screen">
+  .iv_img_switcher{
+    visibility: hidden;
+  }
+  .iv_img_switcher, .iv_img_s_bg{
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    width: 30%;
+    z-index: 2;
+    cursor: pointer;
+  }
+  .iv_img_s_bg{
+    background: #000;
+    width: 100%;
+    opacity: 0.3;
+  }
+  .iv_img_switcher i{
+    position: absolute;
+    font-size: 3.2em;
+    color: #fff;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    margin: auto;
+    width: 1em;
+    height: 1em;
+    text-align: center;
+    z-index: 3;
+  }
+  .iv_img_s_prev, .iv_img_fh{
+    left: 0px;
+  }
+  .iv_img_s_next, .iv_img_sh{
+    right: 0px;
+  }
+  .iv_img_h{
+    position: absolute;
+    top: 0px;
+    width: 50%;
+    height: 100%;
+  }
+  .iv_img_fh:hover .iv_img_s_prev{
+    visibility: visible;
+  }
+  .iv_img_sh:hover .iv_img_s_next{
+    visibility: visible;
+  }
+</style>
+<div class="kt_modal_wrap">
+  <div class="kt_modal iv_modal">
+    <div class="iv_img_h iv_img_fh">
+      <div (click)="switchImg('prev')" class="iv_img_switcher iv_img_s_prev">
+        <div class="iv_img_s_bg"></div>
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+      </div>
+    </div>
+    <img #viewingImage src="/images/gallery/g_1.jpg" alt="">
+    <div class="iv_img_h iv_img_sh">
+      <div (click)="switchImg('next')" class="iv_img_switcher iv_img_s_next">
+        <i class="fa fa-angle-right" aria-hidden="true"></i>
+      </div>
+    </div>
+    <div class="close_modal close" (click)="close();">
+      <i class="fa fa-close" aria-hidden="true"></i>
+    </div>
+  </div>
+</div>
+<div class="kt_modal_background"></div>

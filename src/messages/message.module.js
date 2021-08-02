@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MessageModule = void 0;
 var core_1 = require("@angular/core");
-var platform_browser_1 = require("@angular/platform-browser");
+var common_1 = require("@angular/common");
 var message_component_1 = require("./message.component");
 var message_service_1 = require("./message.service");
 var errorHandler_1 = require("./errorHandler");
@@ -18,7 +18,7 @@ var MessageModule = /** @class */ (function () {
     }
     MessageModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule, router_1.RouterModule],
+            imports: [common_1.CommonModule, router_1.RouterModule],
             declarations: [message_component_1.MessageComponent],
             exports: [message_component_1.MessageComponent],
             providers: [message_service_1.MessageService,

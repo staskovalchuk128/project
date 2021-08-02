@@ -8,17 +8,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ModelModule = void 0;
 var core_1 = require("@angular/core");
-var http_1 = require("@angular/common/http");
 var ajax_requests_1 = require("./ajax.requests");
 var user_repository_1 = require("./user.repository");
-var model_resolver_1 = require("./model.resolver");
+var user_resolver_1 = require("./resolvers/user.resolver");
+var events_resolver_1 = require("./resolvers/events.resolver");
+var character_resolver_1 = require("./resolvers/character.resolver");
+var gallery_resolver_1 = require("./resolvers/gallery.resolver");
 var ModelModule = /** @class */ (function () {
     function ModelModule() {
     }
     ModelModule = __decorate([
         core_1.NgModule({
-            imports: [http_1.HttpClientModule],
-            providers: [ajax_requests_1.AjaxRequests, user_repository_1.UserRepository, model_resolver_1.ModelResolver]
+            providers: [ajax_requests_1.AjaxRequests, user_repository_1.UserRepository, user_resolver_1.UserResolver, events_resolver_1.EventsResolver,
+                gallery_resolver_1.GalleryResolver, character_resolver_1.CharacterResolver]
         })
     ], ModelModule);
     return ModelModule;

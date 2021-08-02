@@ -1,0 +1,115 @@
+<style media="screen">
+  .event_info_bg{
+    color: #fff!important;
+    cursor: pointer;
+  }
+  .ue_table th{
+    border-top: 0px;
+  }
+
+  .ue_header{
+    border-bottom: 3px solid #eee;
+  }
+  .ue_active::after{
+    content: '';
+    background: #329f95;
+    height: 3px;
+    width: 100%;
+    position: absolute;
+    bottom: -3px;
+    left: 0px;
+  }
+  .ue_menu_item{
+    cursor: pointer;
+  }
+
+</style>
+<div class="">
+  <div class="row ue_header">
+    <div class="col">
+      <h3 [routerLink]="['/account/events']" class="d-inline-block ue_menu_item" [class.ue_active] = "currentView == 'allEvents'">All events</h3>
+    </div>
+    <div class="col text-right">
+      <h3 [routerLink]="['/account/events', 'myEvents']" class="d-inline-block ue_menu_item" [class.ue_active] = "currentView == 'myEvents'">Joined events</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="w-100">
+      <table *ngIf="currentView == 'allEvents'" class="table ue_table">
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let event of getEvents()">
+            <td><strong>{{event.name}}</strong></td>
+            <td>{{event.month + '.' + event.day + '.' + event.year}}</td>
+            <td>{{event.time}}</td>
+            <td>
+              <a class="badge badge-info event_info_bg" (click)="seeEventInfo(event)">See info</a>
+            </td>
+            <td>
+              <button (click)="openJoinEvent(event)" class="btn btn-primary btn-sm" name="button" type="button">Join</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+
+
+      <table *ngIf="currentView == 'myEvents'" class="table ue_table">
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Character</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let line of getMyEvents()">
+            <td><strong>{{line.event.name}} at {{line.event.time}}</strong></td>
+            <td>{{line.character.name}}</td>
+            <td>{{line.event.month + '.' + line.event.day + '.' + line.event.year}}</td>
+            <td>
+              <button (click)="leaveEvent(line.event.id, line.character.id)" class="btn btn-danger btn-sm" name="button" type="button">Leave</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+
+    </div>
+  </div>
+</div>
+<app-modal class="modal" id="event_info_modal">
+  <div class="kt_modal_header">
+    <h3>{{modalInfoTitle}}</h3>
+    <div class="close_modal" (click)="closeEventInfoModal(modalEventId);">
+      <i class="fa fa-close" aria-hidden="true"></i>
+    </div>
+  </div>
+  <div class="kt_modal_body event_desc">
+    <div class="event_desc_w">
+      <div class="d-flex flex-wrap" id="event_players">
+      </div>
+    </div>
+  </div>
+  <div class="kt_modal_footer" [style.display]="joinEventDisplay">
+    <label>Select a character</label>
+    <select class="form-control" [value]="0" (change)="pickChar($event.target.value)">
+      <option value="0" >Select character</option>
+      <option *ngFor="let char of getCharacters(); let i = index;" [value]="char.id">{{char.name}}</option>
+    </select>
+  </div>
+  <div class="kt_modal_footer">
+    <button (click)="closeEventInfoModal(modalEventId);" class="btn btn-danger">Close</button>
+    <button (click)="openJoinEvent();" [style.display]="joinEventDisplay == 'block' ? 'none' : 'block'" class="btn btn-primary float-right">Join</button>
+    <button (click)="joinEvent();" [style.display]="joinEventDisplay" class="btn btn-primary float-right">JOIN EVENT</button>
+  </div>
+</app-modal>

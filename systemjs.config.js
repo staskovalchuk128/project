@@ -21,8 +21,12 @@
       '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
 
       // other libraries
+      'angular2-in-memory-web-api': 'npm:angular2-in-memory-web-api',
       'rxjs':                      'npm:rxjs',
-      'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js'
+      'date-fns':                  'npm:date-fns',
+      'angularx-flatpickr':                  'npm:angularx-flatpickr',
+      'angular-calendar':                  'npm:angular-calendar',
+      '@ng-bootstrap/ng-bootstrap': 'npm:@ng-bootstrap/ng-bootstrap'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -34,6 +38,22 @@
         main: 'index.js',
         defaultExtension: 'js'
       },
+      'date-fns': {
+        main: 'index.js',
+      },
+      'angular-calendar': {
+        main: 'angular-calendar.d.ts',
+        defaultExtension: 'ts'
+      },
+      'angularx-flatpickr': {
+        main: 'index.d.ts',
+        defaultExtension: 'ts'
+      },
+      '@ng-bootstrap/ng-bootstrap': {
+        main: 'index.d.ts',
+        defaultExtension: 'ts'
+      },
+      //traceur
       'rxjs/operators': {
         main: 'index.js',
         defaultExtension: 'js'

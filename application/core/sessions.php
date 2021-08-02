@@ -16,6 +16,11 @@ class Sessions{
   }
 
 
+  public function get_logged_user_id(){
+    return $this->is_logged_user() ? $this->user_data['id'] : 0;
+  }
+
+
   public function logout(){
     session_start();
     unset($_SESSION['user_data']);

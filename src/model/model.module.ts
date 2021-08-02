@@ -1,10 +1,12 @@
 import { NgModule } from "@angular/core";
-import { HttpClientModule } from "@angular/common/http";
 import { AjaxRequests } from "./ajax.requests";
 import { UserRepository } from "./user.repository";
-import { ModelResolver } from "./model.resolver";
+import { UserResolver } from "./resolvers/user.resolver";
+import { EventsResolver } from "./resolvers/events.resolver";
+import { CharacterResolver } from "./resolvers/character.resolver";
+import { GalleryResolver } from "./resolvers/gallery.resolver";
 @NgModule({
-  imports: [HttpClientModule],
-  providers: [AjaxRequests, UserRepository, ModelResolver]
+  providers: [AjaxRequests, UserRepository, UserResolver, EventsResolver,
+    GalleryResolver, CharacterResolver]
 })
 export class ModelModule { }

@@ -1,0 +1,214 @@
+<style media="screen">
+
+  .main_s{
+    background: #329f95;
+    width: 100%;
+    height: 400px;
+    margin-top: 54px;
+  }
+  .main_s img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .box_head{
+    color: #fff;
+    padding: .75rem 0rem;
+  }
+  .box_wrap{
+    /* padding: 10px; */
+  }
+  .players_list{
+    text-align: left;
+  }
+  .pl_item{
+    background: transparent;
+    color: #fff;
+    border: 0px;
+  }
+  .pl_item{
+    white-space: nowrap;
+    border-top: 1px solid #00756a;
+  }
+  .pl_item:hover .temp_player_icon{
+    visibility: hidden;
+  }
+  .pl_item:hover .pl_info{
+    visibility: visible;
+    width: 100%;
+  }
+  .pl_player_name{
+    text-overflow: ellipsis;
+    max-width: 85%;
+    overflow: hidden;
+    display: block;
+  }
+
+  .pl_info{
+    width: 0%;
+    height: 100%;
+    overflow: hidden;
+    visibility: hidden;
+    left: 0px;
+    top: 0px;
+    padding: .5em;
+    background: #00756a;
+    -moz-transition: all .2s ease-out;
+    -webkit-transition: all .2s ease-out;
+    -o-transition: all .2s ease-out;
+    transition: all .2s ease-out;
+  }
+  .pl_info_text{
+    font-size: 0.7em;
+  }
+  .temp_player_icon{
+    width: 1.5em;
+    right: 8px;
+    top: 0px;
+    bottom: 0px;
+  }
+</style>
+
+<section class="main_s">
+  <img src="/images/lotrologo.png" alt="">
+</section>
+
+<section class="mt-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="text-center block_item box">
+          <div class="box_head">
+            <h5>Players</h5>
+          </div>
+          <div class="box_wrap">
+            <ul class="list-group players_list">
+              <li class="list-group-item pl_item">
+                <span>
+                  <img alt="Hunter" class="temp_player_icon position-absolute d-block m-auto" src="/images/icons/Hunter-icon.png">
+                </span>
+                <span class="pl_player_name">Binis</span>
+                <div class="position-absolute d-flex pl_info">
+                  <div class="h-100">
+                    <img src="/images/icons/Hunter-icon.png" class="h-100 player_icon" alt="hunter">
+                  </div>
+                  <div class="pl_info_text ml-2">
+                    <span>Hunter</span><br>
+                    <strong>Level: 130</strong>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item pl_item">
+                <span>
+                  <img alt="Rune-keeper" class="temp_player_icon position-absolute d-block m-auto" src="/images/icons/Rune-keeper-icon.png">
+                </span>
+                <span class="pl_player_name">Binsalt</span>
+                <div class="position-absolute d-flex pl_info">
+                  <div class="h-100">
+                    <img src="/images/icons/Rune-keeper-icon.png" class="h-100 player_icon" alt="hunter">
+                  </div>
+                  <div class="pl_info_text ml-2">
+                    <span>Rune-keeper</span><br>
+                    <strong>Level: 130</strong>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item pl_item">
+                <span>
+                  <img alt="Warden" class="temp_player_icon position-absolute d-block m-auto" src="/images/icons/Warden-icon.png">
+                </span>
+                <span class="pl_player_name">Aslime</span>
+                <div class="position-absolute d-flex pl_info">
+                  <div class="h-100">
+                    <img src="/images/icons/Warden-icon.png" class="h-100 player_icon" alt="hunter">
+                  </div>
+                  <div class="pl_info_text ml-2">
+                    <span>Warden</span><br>
+                    <strong>Level: 130</strong>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item pl_item">
+                <span>
+                  <img alt="Lore-master" class="temp_player_icon position-absolute d-block m-auto" src="/images/icons/Lore-master-icon.png">
+                </span>
+                <span class="pl_player_name">Gumdalf</span>
+                <div class="position-absolute d-flex pl_info">
+                  <div class="h-100">
+                    <img src="/images/icons/Lore-master-icon.png" class="h-100 player_icon" alt="hunter">
+                  </div>
+                  <div class="pl_info_text ml-2">
+                    <span>Lore-master</span><br>
+                    <strong>Level: 130</strong>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item pl_item">
+                <span>
+                  <img alt="Warden" class="temp_player_icon position-absolute d-block m-auto" src="/images/icons/Warden-icon.png">
+                </span>
+                <span class="pl_player_name">Sslime</span>
+                <div class="position-absolute d-flex pl_info">
+                  <div class="h-100">
+                    <img src="/images/icons/Warden-icon.png" class="h-100 player_icon" alt="hunter">
+                  </div>
+                  <div class="pl_info_text ml-2">
+                    <span>Warden</span><br>
+                    <strong>Level: 130</strong>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item pl_item">
+                <span>
+                  <img alt="Captain" class="temp_player_icon position-absolute d-block m-auto" src="/images/icons/Captain-icon.png">
+                </span>
+                <span class="pl_player_name">Gordany</span>
+                <div class="position-absolute d-flex pl_info">
+                  <div class="h-100">
+                    <img src="/images/icons/Captain-icon.png" class="h-100 player_icon" alt="hunter">
+                  </div>
+                  <div class="pl_info_text ml-2">
+                    <span>Captain</span><br>
+                    <strong>Level: 130</strong>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="box">
+          <h1>Lorem ipsum dolor </h1>
+          <hr>
+          <div class="">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </div>
+          <div class="">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </div>
+          <div class="">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </div>
+          <div class="">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </div>
+          <div class="">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </div>
+          <div class="">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </div>
+          <div class="">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </div>
+          <div class="">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>

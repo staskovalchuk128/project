@@ -10,24 +10,27 @@ exports.AppModule = void 0;
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
-var core_module_1 = require("./core/core.module");
+var http_1 = require("@angular/common/http");
+var model_module_1 = require("./model/model.module");
+var user_service_1 = require("./model/user.service");
+var pages_module_1 = require("./pages/pages.module");
 var app_routing_1 = require("./app.routing");
-var message_module_1 = require("./messages/message.module");
 var app_component_1 = require("./app.component");
 var auth_guard_1 = require("./helpers/auth.guard");
 var account_guard_1 = require("./helpers/account.guard");
+var notFound_component_1 = require("./pages/main/notFound.component");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule, core_module_1.CoreModule, message_module_1.MessageModule, forms_1.FormsModule, forms_1.ReactiveFormsModule, app_routing_1.routing],
+            imports: [platform_browser_1.BrowserModule, http_1.HttpClientModule, pages_module_1.PagesModule, model_module_1.ModelModule, app_routing_1.routing],
             exports: [
                 forms_1.FormsModule,
                 forms_1.ReactiveFormsModule
             ],
-            providers: [auth_guard_1.AuthGuard, account_guard_1.AccountGuard],
-            declarations: [app_component_1.AppComponent],
+            providers: [auth_guard_1.AuthGuard, account_guard_1.AccountGuard, user_service_1.UserService],
+            declarations: [app_component_1.AppComponent, notFound_component_1.NotFoundComponent],
             bootstrap: [app_component_1.AppComponent]
         })
     ], AppModule);

@@ -1,0 +1,56 @@
+<div class="card">
+  <div class="card-header">
+    {{editing ? "Editing" : "Adding new"}} character
+  </div>
+  <div class="card-body">
+    <form #form="ngForm" (ngSubmit)="addCharacter(form)">
+      <div class="form-row">
+        <div class="col">
+          <input type="text" name="name" [(ngModel)]="character.name" class="form-control" placeholder="Name" required>
+        </div>
+        <div class="col">
+          <select class="form-control" name="_class" [(ngModel)]="character.class_id" placeholder="Class">
+            <option *ngFor="let _class of get_classes();" [value]="_class.id">{{_class.name}}</option>
+          </select>
+        </div>
+        <div class="col">
+          <input type="number" name="level" [(ngModel)]="character.level" class="form-control" placeholder="Level" required>
+        </div>
+        <div class="col">
+          <button class="btn btn-primary w-100" name="button" type="submit">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="mt-5">
+  <h3>My characters</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Class</th>
+        <th>Level</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let character of getCharacters();">
+        <td><strong>{{character.name}}</strong></td>
+        <td><img width="20px" src="/images/icons/{{character.class_icon}}" alt="">&nbsp;{{character.class_name}}</td>
+        <td>{{character.level}}</td>
+        <td>
+          <span (click)="editCharacter(character.id);">
+            <i class="fa fa-pencil text-success" aria-hidden="true"></i>
+          </span>
+        </td>
+        <td>
+          <span (click)="deleteCharacter(character.id);">
+            <i class="fa fa-close text-danger" aria-hidden="true"></i>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

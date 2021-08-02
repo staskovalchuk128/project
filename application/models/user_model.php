@@ -6,11 +6,17 @@ class User_Model{
   public $id;
   public $user_data = array();
   public $session;
+  public $max_character_level = 130;
 
 
-  public function __construct($id = 0){
+  public function __construct($id = 0, $secure = true){
     $this->id = (int)$id;
     $this->session = new Sessions();
+
+    if($this->id == 0) $this->id = $this->session->get_logged_user_id();
+
+    if($secure === true && $this->id == 0) return array('error' => true,'desc' => 'You are not authorized');
+
   }
 
 
@@ -36,7 +42,7 @@ class User_Model{
     $salt = $this->getSalt();
 
     $new_password = md5($salt.$password.$salt);
-
+    $salt = $db->safe_string($salt);
 
     $db->query("INSERT INTO `users` (`first_name`,`last_name`,`email`,`password`,`salt`) VALUES ('".$first_name."','".$last_name."','".$email."','".$new_password."','".$salt."')");
     $user_id = $db->lastInsertID();
@@ -45,6 +51,124 @@ class User_Model{
     return array(
       'id' => $user_id
     );
+
+  }
+
+
+  public function get_characters(){
+    $db = new db();
+    $characters = $db->query("SELECT
+      `user_characters`.`id` AS id,
+      `user_characters`.`name` AS name,
+      `user_characters`.`level` AS level,
+      `character_classes`.`id` AS class_id,
+      `character_classes`.`icon` AS class_icon,
+      `character_classes`.`name` AS class_name
+       FROM `user_characters`
+      INNER JOIN `character_classes` ON `character_classes`.`id` = `user_characters`.`class_id`
+       ORDER BY `user_characters`.`id` ASC")->fetchAll();
+    $db->close();
+    return $characters;
+  }
+
+
+  public function add_character($data){
+    $char_id = isset($data['id']) ? (int)$data['id'] : 0;
+    $name = $data['name'];
+    $class_id = (int)$data['class_id'];
+    $level = (int)$data['level'];
+
+    if(empty($name)) return array('error' => true,'desc' => 'Enter name');
+    if($class_id <= 0) return array('error' => true,'desc' => 'Select a class');
+
+    $db = new db();
+    
+    $exists = $db->query("SELECT `id` FROM `character_classes` WHERE `id` ='".$class_id."'")->fetchArray();
+    if(count($exists) == 0) return array('error' => true,'desc' => 'Unknown class');
+
+
+    $name = $db->safe_string($name);
+
+    $level = $level < 0 ? 1 : $level;
+    $level = $level > $this->max_character_level ? $this->max_character_level : $level;
+
+    if($char_id > 0){
+
+      $exists = $db->query("SELECT `id` FROM `user_characters` WHERE `name` ='".$name."' AND `id` != '".$char_id."'")->fetchArray();
+      if(count($exists) > 0) return array('error' => true,'desc' => 'A character with this name already exists');
+
+      $db->query("UPDATE `user_characters` SET
+        `name` = '".$name."', `class_id` = '".$class_id."', `level` = '".$level."' WHERE `id` ='".$char_id."'");
+        $character_id = $char_id;
+
+    } else {
+
+      $exists = $db->query("SELECT `id` FROM `user_characters` WHERE `name` ='".$name."'")->fetchArray();
+      if(count($exists) > 0) return array('error' => true,'desc' => 'A character with this name already exists');
+
+      $db->query("INSERT INTO `user_characters` (`user_id`,`class_id`,`name`,`level`)
+      VALUES ('".$this->id."','".$class_id."','".$name."','".$level."')");
+      $character_id = $db->lastInsertID();
+      $db->close();
+
+    }
+
+    return array(
+      'character_id' => $character_id
+    );
+  }
+
+
+  public function delete_character($id){
+    $char_id = (int)$id;
+
+    if($char_id == 0) return array('error' => true,'desc' => 'Character not found');
+
+    $db = new db();
+
+    $owner = $db->query("SELECT `id` FROM `user_characters` WHERE `user_id` ='".$this->id."' AND `id` = '".$char_id."'")->fetchArray();
+    if(count($owner) == 0) return array('error' => true,'desc' => 'Character not found');
+
+
+    $db->query("DELETE FROM `user_characters` WHERE `id` = '".$char_id."'");
+    $db->close();
+
+    return true;
+
+  }
+
+
+  public function change_password($current_password, $new_password, $repeat_new_password){
+    $current_password = trim($current_password);
+    $new_password = trim($new_password);
+    $repeat_new_password = trim($repeat_new_password);
+
+    if(empty($current_password)) return array('error' => true,'desc' => 'Enter your current password');
+    if(empty($new_password)) return array('error' => true,'desc' => 'Enter new password');
+    if(empty($repeat_new_password)) return array('error' => true,'desc' => 'Repeat new passwor');
+    if($new_password != $repeat_new_password) return array('error' => true,'desc' => 'Passwords don\'t match');
+
+    $new_salt = $this->getSalt();
+
+    $password = md5($new_salt.$new_password.$new_salt);
+
+    $db = new db();
+    $user_info = $db->query("SELECT `salt`,`password` FROM `users` WHERE `id` ='".$this->id."'")->fetchArray();
+    if(count($user_info) > 0){
+      if($user_info['password'] != md5($user_info['salt'].$current_password.$user_info['salt'])) return array('error' => true,'desc' => 'Current password is Incorrect');
+
+      $new_salt = $db->safe_string($new_salt);
+
+      $db->query("UPDATE `users` SET
+        `password` = '".$password."', `salt` = '".$new_salt."' WHERE `id` ='".$this->id."'");
+
+        $db->close();
+    } else {
+      $db->close();
+      return array('error' => true,'desc' => 'user_not_found');
+    }
+
+    return true;
 
   }
 
@@ -114,7 +238,7 @@ class User_Model{
     if(empty($last_name)) return array('error' => true,'desc' => 'Enter your last name');
 
 
-    $user = $db->query("UPDATE `users` SET
+    $db->query("UPDATE `users` SET
       `first_name` = '".$first_name."', `last_name` = '".$last_name."',
       `middle_name` = '".$middle_name."', `maiden_name` = '".$maiden_name."', `birthday` = '".$birthday."',
       `phone` = '".$phone."',`job` = '".$job."',`gender` = '".$gender."'

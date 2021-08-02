@@ -2,10 +2,14 @@ import { Injectable, Inject } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams} from "@angular/common/http"
 import { Observable } from "rxjs/Observable";
 // import "rxjs/add/operator/map";
+import { map, catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+
 
 @Injectable()
 export class AjaxRequests {
   private url: string;
+  private prev_params;
   constructor(private http: HttpClient) {
     this.url = '/application/ajax.php';
   }
@@ -22,10 +26,10 @@ export class AjaxRequests {
       params = params.appendAll(body);
     }
 
+
     const httpOptions = {
       headers: new HttpHeaders()
     };
-
 
     switch(method){
       case "POST":
